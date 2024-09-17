@@ -26,6 +26,8 @@ public class GameManager_ConnectGame : GameManager
     public List<GameObject> chessList { get; private set; }
     public List<Chess> selectedChess { get; set; }
 
+    private System.Action OnChessDecrease;
+
 
     private void Awake()
     {
@@ -48,6 +50,16 @@ public class GameManager_ConnectGame : GameManager
         GenerateChessBoard();
 
         Invoke("GetChessBoardSizeInfo", 0.2f);
+
+        OnChessDecrease += CheckIfGamePassed;
+    }
+
+    private void CheckIfGamePassed()
+    {
+        if (chessBoardTransform.childCount == 0)
+        {
+            Debug.Log("Game passed!");
+        }
     }
 
     private void GetChessBoardSizeInfo()
@@ -160,7 +172,16 @@ public class GameManager_ConnectGame : GameManager
             return true;
         });
 
-        RefreshChessList();
+        yield return new WaitUntil(() =>
+        {
+            RefreshChessList();
+            return true;
+        });
+        
+        if (OnChessDecrease != null)
+        {
+            OnChessDecrease();
+        }
     }
 
     public void RefreshChessList()

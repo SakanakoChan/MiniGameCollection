@@ -646,6 +646,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1475618145}
+    - target: {fileID: 7046945823051202460, guid: 0f63403fc6396cc46ae8441bbe1fd658, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046945823051202460, guid: 0f63403fc6396cc46ae8441bbe1fd658, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046945823051202460, guid: 0f63403fc6396cc46ae8441bbe1fd658, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7424799737404838899, guid: 0f63403fc6396cc46ae8441bbe1fd658, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
