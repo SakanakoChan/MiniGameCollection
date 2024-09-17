@@ -11,7 +11,7 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     [SerializeField] private GameObject content;
 
     private ScrollRect scroll;
-    private bool isDraging;
+    private bool isDragging;
 
     private float pageWidthPercentage;
     private int pageAmount;
@@ -35,7 +35,7 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private void Update()
     {
-        if (!isDraging && scroll.horizontalNormalizedPosition != targetPageIndex * pageWidthPercentage)
+        if (!isDragging && scroll.horizontalNormalizedPosition != targetPageIndex * pageWidthPercentage)
         {
             scroll.horizontalNormalizedPosition = Mathf.Lerp(scroll.horizontalNormalizedPosition, targetPageIndex * pageWidthPercentage, 10 * Time.deltaTime);
         }
@@ -43,12 +43,12 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        isDraging = true;
+        isDragging = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        isDraging = false;
+        isDragging = false;
 
         float currentHorizontalPostionPercentage = scroll.horizontalNormalizedPosition;
         float closestPageDistancePercentage = Mathf.Abs(currentHorizontalPostionPercentage - 0);
