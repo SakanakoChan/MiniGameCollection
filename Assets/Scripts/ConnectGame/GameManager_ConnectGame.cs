@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager_ConnectGame : MonoBehaviour
+public class GameManager_ConnectGame : GameManager
 {
     [SerializeField] private Canvas canvas;
 
@@ -173,10 +173,6 @@ public class GameManager_ConnectGame : MonoBehaviour
         }
     }
 
-    public void ResetGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 
 
 #if UNITY_EDITOR
