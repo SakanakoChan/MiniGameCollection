@@ -31,11 +31,6 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         //or in other words, page 1 to page 5, user should swipe 4 times
         //and if don't minues 1 here, user should swipe 5 times, which is wrong
         pageWidthPercentage = 1f / (pageAmount - 1); 
-
-        for (int i = 0; i < pageAmount; i++)
-        {
-            Debug.Log(i * pageWidthPercentage);
-        }
     }
 
     private void Update()
