@@ -56,15 +56,15 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         isDraging = false;
 
         float currentHorizontalPostionPercentage = scroll.horizontalNormalizedPosition;
-        float closetPageDistancePercentage = Mathf.Abs(currentHorizontalPostionPercentage - 0);
+        float closestPageDistancePercentage = Mathf.Abs(currentHorizontalPostionPercentage - 0);
 
         for (int i = 0; i < pageAmount; i++)
         {
             float distancePercentageToCurrentPage = Mathf.Abs(currentHorizontalPostionPercentage - i * pageWidthPercentage);
 
-            if (distancePercentageToCurrentPage <= closetPageDistancePercentage)
+            if (distancePercentageToCurrentPage <= closestPageDistancePercentage)
             {
-                closetPageDistancePercentage = distancePercentageToCurrentPage;
+                closestPageDistancePercentage = distancePercentageToCurrentPage;
                 targetPageIndex = i;
             }
         }
