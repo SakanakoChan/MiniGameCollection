@@ -65,7 +65,6 @@ public class Chess : MonoBehaviour
 
                 if (CanConnect(selectedChess[0].transform.position))
                 {
-                    //DrawLine(lineVetexList.ToArray());
                     List<Vector2> vetexList = new List<Vector2>();
                     vetexList.Add(transform.position);
                     foreach (var vec in turningPointList)
@@ -74,7 +73,8 @@ public class Chess : MonoBehaviour
                     }
                     vetexList.Add(selectedChess[0].transform.position);
 
-                    DrawLine(vetexList.ToArray());
+                    DrawLine(vetexList);
+
                     GameManager_ConnectGame.instance.DestroyChess(gameObject);
                     GameManager_ConnectGame.instance.DestroyChess(selectedChess[0].gameObject);
                 }
@@ -122,7 +122,7 @@ public class Chess : MonoBehaviour
         float targetY = _targetChess.y;
 
         //if these two chesses are next to each other
-        if (Vector2.Distance(_originalChess, _targetChess) == GameManager_ConnectGame.chessSize)
+        if (Vector2.Distance(_originalChess, _targetChess) == GameManager_ConnectGame.instance.chessSize)
         {
             return true;
         }
@@ -183,6 +183,7 @@ public class Chess : MonoBehaviour
             }
 
             //if these two chesses are neither in the same column nor in the same row
+
             return false;
 
         }
@@ -221,17 +222,16 @@ public class Chess : MonoBehaviour
 
     private bool CanConnectWith2Turning(Vector2 _originalChess, Vector2 _targetChess)
     {
-        RectTransform chessBoardTransform = GameManager_ConnectGame.instance.chessBoardTransform as RectTransform;
-        float chessBoardWidth = chessBoardTransform.rect.width;
-        float chessBoardHeight = chessBoardTransform.rect.height;
+        turningPointList.Clear();
+
+        float chessBoardLeftBound = GameManager_ConnectGame.instance.chessBoardLeftBound - GameManager_ConnectGame.instance.chessSize;
+        float chessBoardRightBound = GameManager_ConnectGame.instance.chessBoardRightBound + GameManager_ConnectGame.instance.chessSize;
+
+        float chessBoardUpBound = GameManager_ConnectGame.instance.chessBoardUpBound + GameManager_ConnectGame.instance.chessSize;
+        float chessBoardDownBound = GameManager_ConnectGame.instance.chessBoardDownBound - GameManager_ConnectGame.instance.chessSize;
 
         //checking turning point horizontally
-        float chessBoardLeftBounds = chessBoardTransform.position.x - (chessBoardWidth / 2) - GameManager_ConnectGame.chessSize;
-        float chessBoardRightBounds = chessBoardTransform.position.x + (chessBoardWidth / 2) + GameManager_ConnectGame.chessSize;
-
-        Debug.Log(chessBoardLeftBounds);
-
-        for (int i = (int)chessBoardLeftBounds; i <= (int)chessBoardRightBounds; i += GameManager_ConnectGame.chessSize)
+        for (int i = (int)chessBoardLeftBound; i <= (int)chessBoardRightBound; i += GameManager_ConnectGame.instance.chessSize)
         {
             if (i == transform.position.x)
             {
@@ -245,17 +245,14 @@ public class Chess : MonoBehaviour
                 //Vector2[] vetexList = new Vector2[2] { _originalChess, turningPoint };
                 //DrawLine(vetexList);
 
+                turningPointList.Insert(0, turningPoint);
+
                 return true;
             }
         }
 
         //checking turning point vertically
-        float chessBoardUpBounds = chessBoardTransform.position.y + (chessBoardHeight / 2) + GameManager_ConnectGame.chessSize;
-        float chessBoardDownBounds = chessBoardTransform.position.y - (chessBoardHeight / 2) - GameManager_ConnectGame.chessSize;
-
-        Debug.Log(chessBoardUpBounds);
-
-        for (int i = (int)chessBoardDownBounds; i <= (int)chessBoardUpBounds; i += GameManager_ConnectGame.chessSize)
+        for (int i = (int)chessBoardDownBound; i <= (int)chessBoardUpBound; i += GameManager_ConnectGame.instance.chessSize)
         {
             if (i == transform.position.y)
             {
@@ -268,6 +265,8 @@ public class Chess : MonoBehaviour
             {
                 //Vector2[] vetexList = new Vector2[2] { _originalChess, turningPoint };
                 //DrawLine(vetexList);
+
+                turningPointList.Insert(0, turningPoint);
 
                 return true;
             }
@@ -290,21 +289,24 @@ public class Chess : MonoBehaviour
         return true;
     }
 
-    private void DrawLine(Vector2[] vetexList)
+    private void DrawLine(List<Vector2> _vertexList)
     {
-        GameObject line = Instantiate(linePrefab, transform.position, Quaternion.identity);
-        LineRenderer newLine = line.GetComponent<LineRenderer>();
+        GameObject line = Instantiate(linePrefab, transform.position, Quaternion.identity, transform.parent.parent);
+        UILine newLine = line.GetComponent<UILine>();
 
-        newLine.startWidth = 0.1f;
-        newLine.startColor = Color.white;
+        //newLine.SetVerticesDirty();
+        newLine.SetVertex(_vertexList);
 
-        newLine.endWidth = 0.1f;
-        newLine.endColor = Color.white;
+        //newLine.startWidth = 0.2f;
+        //newLine.startColor = Color.white;
 
-        newLine.positionCount = vetexList.Length;
-        for (int i = 0; i < vetexList.Length; i++)
-        {
-            newLine.SetPosition(i, vetexList[i]);
-        }
+        //newLine.endWidth = 0.2f;
+        //newLine.endColor = Color.white;
+
+        //newLine.positionCount = vetexList.Length;
+        //for (int i = 0; i < vetexList.Length; i++)
+        //{
+        //    newLine.SetPosition(i, vetexList[i]);
+        //}
     }
 }
