@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MoveCarGame.unity
     guid: b542596a4ee4c0440a9f16ed70af8337
+  - enabled: 1
+    path: Assets/Scenes/RubberGame.unity
+    guid: 855c890ad6254d144a98a35f6c5a66c2
   m_configObjects: {}
