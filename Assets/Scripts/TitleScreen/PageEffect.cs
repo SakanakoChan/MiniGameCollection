@@ -30,7 +30,9 @@ public class PageEffect : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         //minus 1 here because there will be gaps between pages, these gaps should also get taken into account of the page size
         //or in other words, page 1 to page 5, user should swipe 4 times
         //and if don't minues 1 here, user should swipe 5 times, which is wrong
-        pageWidthPercentage = 1f / (pageAmount - 1); 
+        pageWidthPercentage = 1f / (pageAmount - 1);
+
+        scroll.horizontalNormalizedPosition = 0;
     }
 
     private void Update()
