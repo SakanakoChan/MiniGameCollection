@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class UILineRenderer : Graphic
 {
@@ -17,7 +13,7 @@ public class UILineRenderer : Graphic
     {
         vh.Clear();
 
-        if (points == null || points.Count < 2 )
+        if (points == null || points.Count < 2)
         {
             return;
         }

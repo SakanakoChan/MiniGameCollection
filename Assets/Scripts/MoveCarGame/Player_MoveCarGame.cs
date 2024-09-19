@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Car
+public class Player_MoveCarGame : Car
 {
     protected override void Awake()
     {

@@ -10,4 +10,9 @@ public class TtileScreen : MonoBehaviour
     {
         SceneManager.LoadScene(_levelName);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
