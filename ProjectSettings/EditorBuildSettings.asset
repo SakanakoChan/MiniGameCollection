@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CallJavaTest.unity
     guid: 606b2dd7c2d846e49bfd6582a520b622
+  - enabled: 1
+    path: Assets/Scenes/AndroidPermissionRequest.unity
+    guid: b6d40ce436abe3740aa94cb319f6c5ef
   m_configObjects: {}
