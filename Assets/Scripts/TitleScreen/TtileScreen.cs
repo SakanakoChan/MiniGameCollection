@@ -15,4 +15,13 @@ public class TtileScreen : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void WechatLoginAuthorization()
+    {
+        AndroidJavaClass javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity");
+
+        javaObject.Call("WechatLoginAuthorize");
+    }
+
 }

@@ -19,11 +19,11 @@ public class CallJava : MonoBehaviour
 
     void Start()
     {
-        javaClass = new AndroidJavaClass("com.example.unitytest.Test");
-        javaObject = new AndroidJavaObject("com.example.unitytest.Test");
+        javaClass = new AndroidJavaClass("com.sakanakochan.minigamecollection.CallJavaFunction");
+        javaObject = new AndroidJavaObject("com.sakanakochan.minigamecollection.CallJavaFunction");
 
-        unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+        //unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        //currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
     }
 
     public void SetLOG()
