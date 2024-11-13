@@ -3309,7 +3309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 162621405}
   m_Layer: 5
-  m_Name: RubberGame (3)
+  m_Name: CarGame2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9729,7 +9729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Rubber Game
+  m_text: 'Car Game 2.0
 
 '
   m_isRightToLeft: 0
@@ -14333,7 +14333,7 @@ GameObject:
   - component: {fileID: 760083893}
   - component: {fileID: 760083892}
   m_Layer: 5
-  m_Name: Button_RubberGame
+  m_Name: Button_CarGame2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14412,7 +14412,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: RubberGame
+          m_StringArgument: CarGame2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &760083893
@@ -14435,7 +14435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ed97c5b183c2e54eb5265360c41a871, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3b972273b1b1eb54ab9b35d67a227dad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28845,7 +28845,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 642228269}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.19999999
+  m_Size: 0.2
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
