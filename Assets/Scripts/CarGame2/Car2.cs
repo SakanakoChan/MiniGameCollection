@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Car2 : MonoBehaviour
@@ -11,6 +7,7 @@ public class Car2 : MonoBehaviour
     public int carLength;
     public int carWidth;
     public LayerMask canCollideWithWhat;
+    //public float distanceToDestroyCar = 30;
 
     private bool isHorizontallyPlaced;
     private bool isMoving;
@@ -19,8 +16,13 @@ public class Car2 : MonoBehaviour
     private Vector3 backwardCheckPosition;
 
     private Vector3 destinationPosition = Vector3.negativeInfinity;
-    private static int destinationLayer;
+    //private static int destinationLayer;
 
+    private float initialDistanceToDestination = float.NegativeInfinity;
+
+    private BoxCollider2D cd;
+
+    //private System.Action OnCarDestroyed;
 
     private void Start()
     {
@@ -36,8 +38,10 @@ public class Car2 : MonoBehaviour
 
         UpdateRayCastCheckPosition();
 
-        destinationLayer = LayerMask.NameToLayer("Destination");
-        Debug.Log(destinationLayer);
+        cd = GetComponent<BoxCollider2D>();
+
+        //destinationLayer = LayerMask.NameToLayer("Destination");
+        //Debug.Log(destinationLayer);
     }
 
 
@@ -45,7 +49,7 @@ public class Car2 : MonoBehaviour
     {
         if (isMoving && destinationPosition != Vector3.negativeInfinity)
         {
-            transform.position = Vector3.Lerp(transform.position, destinationPosition, 5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, destinationPosition, 30f * (1f / initialDistanceToDestination) * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, destinationPosition) < 0.05f)
             {
@@ -53,6 +57,13 @@ public class Car2 : MonoBehaviour
                 UpdateRayCastCheckPosition();
                 isMoving = false;
             }
+        }
+
+        if (Vector3.Distance(transform.position, Vector3.zero) >= GameManager_Car2.instance.distanceToDestroyCar)
+        {
+            GameManager_Car2.instance.DestroyCar(gameObject);
+            //Car2GameManager.instance.OnCarDestroyed?.Invoke(gameObject);
+            //Destroy(gameObject);
         }
 
         //Debug.Log(isMoving);
@@ -100,6 +111,7 @@ public class Car2 : MonoBehaviour
         }
     }
 
+
     private bool canGoForward()
     {
         if (!Physics2D.Raycast(forwardCheckPosition, transform.right, CELL_SIZE - 0.55f, canCollideWithWhat))
@@ -111,29 +123,32 @@ public class Car2 : MonoBehaviour
                 //Debug.Log($"hit target name is {hit.collider.gameObject}");
 
                 //if can directly go to the destination
-                if (hit.collider.gameObject.layer == destinationLayer)
-                {
-                    destinationPosition = destinationPosition = hit.collider.gameObject.transform.position;
-                }
+                //if (hit.collider.gameObject.layer == destinationLayer)
+                //{
+                //    destinationPosition = destinationPosition = hit.collider.gameObject.transform.position;
+                //}
                 //if can't go to the destination
+                //else
+                //{
+                if (isHorizontallyPlaced)
+                {
+                    destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x - (float)carLength / 2), RoundToNearestHalf(hit.point.y), 0);
+                }
                 else
                 {
-                    if (isHorizontallyPlaced)
-                    {
-                        destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x - (float)carLength / 2), RoundToNearestHalf(hit.point.y), 0);
-                    }
-                    else
-                    {
-                        destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x), RoundToNearestHalf(hit.point.y - (float)carLength / 2), 0);
-                    }
+                    destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x), RoundToNearestHalf(hit.point.y - (float)carLength / 2), 0);
                 }
+                //}
             }
             else
             {
-                destinationPosition = Vector3.negativeInfinity;
+                //destinationPosition = Vector3.negativeInfinity;
+                destinationPosition = transform.position + transform.right * 100;
+                cd.enabled = false;
             }
 
-            Debug.Log(destinationPosition);
+            initialDistanceToDestination = Vector3.Distance(transform.position, destinationPosition);
+            //Debug.Log(destinationPosition);
 
             //Debug.Log("Can go forward");
             return true;
@@ -154,28 +169,31 @@ public class Car2 : MonoBehaviour
             {
                 //Debug.Log($"hit point is: {hit.point}");
                 //Debug.Log($"hit target name is {hit.collider.gameObject}");
-                if (hit.collider.gameObject.layer == destinationLayer)
+                //if (hit.collider.gameObject.layer == destinationLayer)
+                //{
+                //    destinationPosition = hit.collider.gameObject.transform.position;
+                //}
+                //else
+                //{
+                if (isHorizontallyPlaced)
                 {
-                    destinationPosition = hit.collider.gameObject.transform.position;
+                    destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x + (float)carLength / 2), RoundToNearestHalf(hit.point.y), 0);
                 }
                 else
                 {
-                    if (isHorizontallyPlaced)
-                    {
-                        destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x + (float)carLength / 2), RoundToNearestHalf(hit.point.y), 0);
-                    }
-                    else
-                    {
-                        destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x), RoundToNearestHalf(hit.point.y + (float)carLength / 2), 0);
-                    }
+                    destinationPosition = new Vector3(RoundToNearestHalf(hit.point.x), RoundToNearestHalf(hit.point.y + (float)carLength / 2), 0);
                 }
+                //}
             }
             else
             {
-                destinationPosition = Vector3.negativeInfinity;
+                //destinationPosition = Vector3.negativeInfinity;
+                destinationPosition = transform.position - transform.right * 100;
+                cd.enabled = false;
             }
 
-            Debug.Log(destinationPosition);
+            initialDistanceToDestination = Vector3.Distance(transform.position, destinationPosition);
+            //Debug.Log(destinationPosition);
 
             //Debug.Log("Can go backward");
             return true;
